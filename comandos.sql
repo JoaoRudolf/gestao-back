@@ -11,7 +11,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
 USE `mydb` ;
 
 -- -----------------------------------------------------
@@ -19,26 +19,23 @@ USE `mydb` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`pessoa` (
   `id_pessoa` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(150) CHARACTER SET 'ascii' NOT NULL,
-  `cep` VARCHAR(8) NULL,
-  `logradouro` VARCHAR(255) CHARACTER SET 'ascii' NULL,
-  `numero` VARCHAR(6) NULL,
-  `complemento` VARCHAR(50) NULL,
-  `bairro` VARCHAR(50) NULL,
-  `cidade` VARCHAR(50) NULL,
-  `estado` CHAR(2) NULL,
-  `telefone1` VARCHAR(13) CHARACTER SET 'ascii' NOT NULL,
-  `telefone2` VARCHAR(13) CHARACTER SET 'ascii' NULL,
-  `telefone3` VARCHAR(13) CHARACTER SET 'ascii' NULL,
-  `email` VARCHAR(100) NULL,
-  `observacoes` VARCHAR(255) CHARACTER SET 'ascii' NULL,
+  `nome` VARCHAR(150) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL,
+  `cep` VARCHAR(8) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL,
+  `logradouro` VARCHAR(255) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL,
+  `numero` VARCHAR(6) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL,
+  `complemento` VARCHAR(50) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL,
+  `bairro` VARCHAR(50) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL,
+  `cidade` VARCHAR(50) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL,
+  `estado` CHAR(2) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL,
+  `telefone1` VARCHAR(13) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL,
+  `telefone2` VARCHAR(13) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL,
+  `telefone3` VARCHAR(13) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL,
+  `email` VARCHAR(100) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL,
+  `observacoes` VARCHAR(255) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL,
   PRIMARY KEY (`id_pessoa`))
-ENGINE = InnoDB;
-
-ALTER TABLE pessoa MODIFY
-nome VARCHAR(150)
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -56,14 +53,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`pessoa_fisica` (
     REFERENCES `mydb`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`pessoa_juridica`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`pessoa_juridica` (
-  `cnpj` CHAR(14) CHARACTER SET 'ascii' NULL,
+  `cnpj` CHAR(14) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL,
   `insc_est` VARCHAR(14) NULL,
   `id_pessoa` INT NOT NULL,
   PRIMARY KEY (`id_pessoa`),
@@ -72,7 +71,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`pessoa_juridica` (
     REFERENCES `mydb`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -84,7 +85,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`lucro_liquido_mensal` (
   `soma_lucro_bruto` DECIMAL(10,2) NULL,
   `soma_despesas` VARCHAR(45) NULL,
   PRIMARY KEY (`id_lucro`))
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -95,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`contrato` (
   `cliente_id` INT NOT NULL,
   `vendedor_id` INT NOT NULL,
   `valor` DECIMAL(8,2) NOT NULL,
-  `cond_pgto` VARCHAR(50) NOT NULL,
+  `cond_pgto` VARCHAR(50) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL,
   `objeto` VARCHAR(1000) NOT NULL,
   `dt_contrato` DATE NOT NULL,
   `prazo_entrega` INT NOT NULL,
@@ -123,7 +126,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`contrato` (
     REFERENCES `mydb`.`lucro_liquido_mensal` (`id_lucro`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -134,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`agendamento` (
   `contrato_id` INT NOT NULL,
   `dt_inicio` DATE NULL,
   `dias_agenda` VARCHAR(45) NULL,
-  `status` VARCHAR(30) NOT NULL,
+  `status` VARCHAR(30) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL,
   PRIMARY KEY (`id_agendamento`),
   INDEX `contrato_id_idx` (`contrato_id` ASC) VISIBLE,
   CONSTRAINT `contrato_id`
@@ -162,7 +167,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`custo` (
     REFERENCES `mydb`.`contrato` (`id_contrato`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -181,7 +188,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`despesa` (
     REFERENCES `mydb`.`lucro_liquido_mensal` (`id_lucro`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
