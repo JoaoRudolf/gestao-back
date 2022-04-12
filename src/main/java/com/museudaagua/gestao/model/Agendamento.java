@@ -29,6 +29,7 @@ public class Agendamento {
 	@Column(name = "dt_inicio")
 	private LocalDate dataInicio;
 	
+	@Column(name = "dias_agenda")
 	private int diasNaAgenda;
 	
 	@NotNull
